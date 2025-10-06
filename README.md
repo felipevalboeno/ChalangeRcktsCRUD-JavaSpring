@@ -7,18 +7,18 @@ em uma estrutura **MVC**, além de aplicar o padrão **DTO** para transferência
 
 ## 🚀 Tecnologias Utilizadas
 
-##Linguagem
+## Linguagem
 - Java 17+
 
-##Banco de dados
+## Banco de dados
 - PostgreSQL 
 - Dbeaver
 
-##Framework
+## Framework
 - Spring Boot
 - Maven
  
-##Dependêcias
+## Dependêcias
 - Spring Data JPA
 - ModelMapper
 - Spring Actuator
@@ -27,8 +27,13 @@ em uma estrutura **MVC**, além de aplicar o padrão **DTO** para transferência
 - Spring Validation
 - PostgreSql
 
-##PlugIn
+## PlugIn
   - Lombok
+
+## Documentação e teste
+  - Swagger
+  ![SWAGGER](image.png)
+  
 
 ---
 
