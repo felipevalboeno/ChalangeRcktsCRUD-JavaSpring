@@ -27,7 +27,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())  // desabilita CSRF
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(PERMIT_ALL_LIST).permitAll()
-                .requestMatchers("/cursos").permitAll()   // libera todas as URLs da lista
+                //.requestMatchers("/cursos").permitAll()   // libera todas as URLs da lista
                 .anyRequest().permitAll()                      // libera qualquer outra URL
             );
 

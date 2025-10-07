@@ -2,12 +2,9 @@ package com.crudcursos.felipevalboeno.crudcursos.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import com.crudcursos.felipevalboeno.crudcursos.dto.CursoDTO;
 import com.crudcursos.felipevalboeno.crudcursos.model.Curso;
 import com.crudcursos.felipevalboeno.crudcursos.repository.CursoRepository;
@@ -22,10 +19,10 @@ public class CursoService {
     @Autowired
     private CursoRepository cursoRepository;
 
-
+ // Lógica para criar um curso
     public CursoDTO create(CursoDTO cursoDTO) {
-        // Lógica para criar um curso
-
+       
+        //ID é autoincrement no banco
         cursoDTO.setId(null);
 
         //convertendo o cursoDTO em um model
@@ -38,6 +35,7 @@ public class CursoService {
         return cursoDTO;
     }
 
+//Lógica pra ler todos os cursos na lista
     public List<CursoDTO> readAll() {
         List<Curso> cursos = cursoRepository.findAll();
 
@@ -69,9 +67,8 @@ public class CursoService {
 
     //     return cursoDTO;
     // }
-
-    public CursoDTO update(Integer id, CursoDTO cursoDTO) {
-    // 1️⃣ Busca o curso existente
+public CursoDTO update(Integer id, CursoDTO cursoDTO) {
+    // Busca o curso existente
     Optional<Curso> cursoExistenteOpt = cursoRepository.findById(id);
     if (cursoExistenteOpt.isEmpty()) {
         throw new RuntimeException("Curso não encontrado com id: " + id);
@@ -79,22 +76,19 @@ public class CursoService {
 
     Curso cursoExistente = cursoExistenteOpt.get();
 
-    // 2️⃣ Atualiza apenas os campos que vieram do DTO
-    cursoExistente.setNomeCurso(cursoDTO.getNomeCurso());
-    cursoExistente.setCategoriaCurso(cursoDTO.getCategoriaCurso());
-    cursoExistente.setDescricaoCurso(cursoDTO.getDescricaoCurso());
-    cursoExistente.setDuracaoCurso(cursoDTO.getDuracaoCurso());
-    cursoExistente.setValorCurso(cursoDTO.getValorCurso());
-    cursoExistente.setNivelCurso(cursoDTO.getNivelCurso());
+    // 2Mapeia apenas os campos não nulos do DTO para o curso existente
+    mapper.getConfiguration().setSkipNullEnabled(true); // ignora campos nulos
+    mapper.map(cursoDTO, cursoExistente);
 
-    // 3️⃣ Salva no banco
+    // Salva no banco
     Curso cursoAtualizado = cursoRepository.save(cursoExistente);
 
-    // 4️⃣ Converte de volta para DTO
+    // Converte de volta para DTO
     return mapper.map(cursoAtualizado, CursoDTO.class);
 }
 
 
+//Lógica pra burcar um curso por id
 public CursoDTO readById(Integer id) {
     Optional<Curso> cursoOpt = cursoRepository.findById(id);
     if (cursoOpt.isEmpty()) {
@@ -104,6 +98,7 @@ public CursoDTO readById(Integer id) {
 }
 
 
+//Lógica pra deletar um curso
     public void delete(Integer id) {
         Optional<Curso> cursoOpt = cursoRepository.findById(id);
         if (cursoOpt.isEmpty()) {

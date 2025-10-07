@@ -16,7 +16,7 @@ em uma estrutura **MVC**, além de aplicar o padrão **DTO** para transferência
 
 ## Framework
 - Spring Boot
-- Maven
+
  
 ## Dependêcias
 - Spring Data JPA
@@ -26,6 +26,8 @@ em uma estrutura **MVC**, além de aplicar o padrão **DTO** para transferência
 - Spring DevTools
 - Spring Validation
 - PostgreSql
+- Thymeleaf
+
 
 ## PlugIn
   - Lombok
@@ -36,6 +38,8 @@ em uma estrutura **MVC**, além de aplicar o padrão **DTO** para transferência
 
 
 ## Front-end 100% funcional
+-> Thymeleaf + TailwindCSS
+
  - cursos/list
 
 ![alt text](image-1.png)
