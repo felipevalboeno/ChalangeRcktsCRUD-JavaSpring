@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title th:text="${cursoDTO.id != null} ? 'Editar Curso' : 'Cadastrar Curso'">Curso</title>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center p-6 min-h-screen font-sans">
+
+    <h1 class="text-4xl font-bold mb-6 text-purple-500"
+        th:text="${cursoDTO.id != null} ? 'Editar Curso' : 'Cadastrar Novo Curso'">Editar Curso</h1>
+
+    <!-- Formulário de criação/edição -->
+    <form th:action="${cursoDTO.id != null} ? @{'/cursos/editar/' + ${cursoDTO.id}} : @{/cursos/create}"
+          th:object="${cursoDTO}" method="post"
+          class="flex flex-col gap-4 w-full max-w-xl bg-gray-800 p-6 rounded-lg shadow-lg">
+
+        <input type="text" th:field="*{nomeCurso}" placeholder="Nome do curso"
+               class="bg-gray-700 text-white p-2 rounded focus:outline-none" required>
+
+        <input type="text" th:field="*{categoriaCurso}" placeholder="Categoria"
+               class="bg-gray-700 text-white p-2 rounded focus:outline-none" required>
+
+        <input type="text" th:field="*{professorCurso}" placeholder="Professor"
+               class="bg-gray-700 text-white p-2 rounded focus:outline-none" required>
+
+        <input type="text" th:field="*{statusCurso}" placeholder="Status"
+               class="bg-gray-700 text-white p-2 rounded focus:outline-none" required>
+
+        <input type="text" th:field="*{descricaoCurso}" placeholder="Descrição"
+               class="bg-gray-700 text-white p-2 rounded focus:outline-none">
+
+        <input type="text" th:field="*{duracaoCurso}" placeholder="Duração (ex: 10h)"
+               class="bg-gray-700 text-white p-2 rounded focus:outline-none">
+
+        <input type="text" th:field="*{valorCurso}" placeholder="Valor (ex: 1000.00)"
+               class="bg-gray-700 text-white p-2 rounded focus:outline-none">
+
+        <input type="text" th:field="*{nivelCurso}" placeholder="Nível (Iniciante|Intermediário|Avançado)"
+               class="bg-gray-700 text-white p-2 rounded focus:outline-none">
+
+        <button type="submit"
+                class="bg-purple-600 hover:bg-purple-700 p-2 rounded font-bold transition mt-2"
+                th:text="${cursoDTO.id != null} ? 'Atualizar Curso' : 'Cadastrar Curso'">
+           Editar Curso
+        </button>
+
+    </form>
+
+    <!-- Mensagem de sucesso -->
+    <div th:if="${mensagem}" class="mt-4 p-3 bg-green-600 text-white rounded shadow">
+        <p th:text="${mensagem}"></p>
+    </div>
+
+    <button onclick="window.location.href='/cursos/list'"
+            class="mt-6 bg-gray-600 hover:bg-gray-700 p-3 rounded font-semibold transition">
+        Voltar à Lista
+    </button>
+
+</body>
+</html>

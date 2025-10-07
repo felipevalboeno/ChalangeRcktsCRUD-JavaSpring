@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Listagem de Cursos</title>
+</head>
+<body style="background-color: #141414;" class="text-white h-screen flex flex-col items-center font-inter">
+
+    <h1 class="text-3xl font-bold my-6 text-[#7C3AFF]">Cursos</h1>
+
+    <div class=" flex flex-col items-center  flex-1 gap-12 ">
+
+    
+        <table class="w-full border border-gray-800 rounded-lg  border-spacing-0">
+    <thead class="bg-[#7C3AFF] text-white">
+        <tr>
+            <th class="py-2 px-4 border border-gray-800 rounded-tl-lg">Curso</th>
+            <th class="py-2 px-4 border border-gray-800">Categoria</th>
+            <th class="py-2 px-4 border border-gray-800">Professor</th>
+            <th class="py-2 px-4 border border-gray-800">Ativo</th>
+            <th class="py-2 px-4 border border-gray-800 rounded-tr-lg">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+     <tr th:each="curso, iterStat : ${cursos}"
+    th:classappend="${iterStat.index % 2 == 0} ? 'bg-gray-900' : 'bg-gray-800'">
+    <td class="px-4 py-2" th:text="${curso.nomeCurso}"></td>
+    <td class="px-4 py-2" th:text="${curso.categoriaCurso}"></td>
+    <td class="px-4 py-2" th:text="${curso.professorCurso}"></td>
+    <td class="px-4 py-2" th:text="${curso.statusCurso}"></td>
+    <td class=" border border-gray-800 px-4 py-2 text-center flex gap-2 justify-center">
+        <a th:href="@{'/cursos/editar/' + ${curso.id}}"
+           class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
+            Editar
+        </a>
+        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                th:onclick="'deletarCurso(' + ${curso.id} + ')'">
+            Excluir
+        </button>
+    </td>
+</tr>
+
+
+    </tbody>
+</table>
+   
+    <a href="/cursos/create"
+   class="w-30 p-4 rounded-lg text-white font-semibold bg-gradient-to-r from-violet-800 to-indigo-500 hover:from-cyan-500 hover:to-indigo-400 transition-all shadow-lg text-center inline-block">
+    Novo Curso
+</a>
+ 
+<script>
+function deletarCurso(id) {
+    if (confirm('Tem certeza que deseja excluir este curso?')) {
+        fetch('/api/cursos/' + id, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(response => {
+            if (response.ok) location.reload();
+            else alert('Erro ao deletar o curso');
+        })
+        .catch(err => console.error(err));
+    }
+}
+</script>
+</body>
+</html>

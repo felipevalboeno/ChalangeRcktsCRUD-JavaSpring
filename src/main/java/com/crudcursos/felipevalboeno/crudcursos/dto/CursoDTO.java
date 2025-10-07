@@ -17,6 +17,14 @@ public class CursoDTO {
     @NotBlank(message = "Categoria do curso é obrigatória")
     @Size(max = 50)
     private String categoriaCurso;
+
+     @NotBlank(message = "Professor do curso é obrigatório")
+    @Size(max = 50)
+    private String professorCurso;
+
+    @NotBlank(message = "Status do curso é obrigatório")
+    @Size(max = 5)
+    private String statusCurso;
     
     @Size(max=500)
     private String descricaoCurso;

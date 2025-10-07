@@ -50,25 +50,59 @@ public class CursoService {
     }
 
 
-     /**
-     * Método para atualizar o curso na lista
-     * 
-     * @param curso que será atualizado
-     * @param id      do curso
-     * @return Retorna o curso após atualizar a lista;
-     */
-    public CursoDTO update(Integer id, CursoDTO cursoDTO) {
-        // Lógica para atualizar um curso
+    //  /**
+    //  * Método para atualizar o curso na lista
+    //  * 
+    //  * @param curso que será atualizado
+    //  * @param id      do curso
+    //  * @return Retorna o curso após atualizar a lista;
+    //  */
+    // public CursoDTO update(Integer id, CursoDTO cursoDTO) {
+    //     // Lógica para atualizar um curso
         
-        //passa o id para o dto
-        cursoDTO.setId(id);
+    //     //passa o id para o dto
+    //     cursoDTO.setId(id);
 
-        Curso curso = mapper.map(cursoDTO, Curso.class);
+    //     Curso curso = mapper.map(cursoDTO, Curso.class);
 
-        cursoRepository.save(curso);
+    //     cursoRepository.save(curso);
 
-        return cursoDTO;
+    //     return cursoDTO;
+    // }
+
+    public CursoDTO update(Integer id, CursoDTO cursoDTO) {
+    // 1️⃣ Busca o curso existente
+    Optional<Curso> cursoExistenteOpt = cursoRepository.findById(id);
+    if (cursoExistenteOpt.isEmpty()) {
+        throw new RuntimeException("Curso não encontrado com id: " + id);
     }
+
+    Curso cursoExistente = cursoExistenteOpt.get();
+
+    // 2️⃣ Atualiza apenas os campos que vieram do DTO
+    cursoExistente.setNomeCurso(cursoDTO.getNomeCurso());
+    cursoExistente.setCategoriaCurso(cursoDTO.getCategoriaCurso());
+    cursoExistente.setDescricaoCurso(cursoDTO.getDescricaoCurso());
+    cursoExistente.setDuracaoCurso(cursoDTO.getDuracaoCurso());
+    cursoExistente.setValorCurso(cursoDTO.getValorCurso());
+    cursoExistente.setNivelCurso(cursoDTO.getNivelCurso());
+
+    // 3️⃣ Salva no banco
+    Curso cursoAtualizado = cursoRepository.save(cursoExistente);
+
+    // 4️⃣ Converte de volta para DTO
+    return mapper.map(cursoAtualizado, CursoDTO.class);
+}
+
+
+public CursoDTO readById(Integer id) {
+    Optional<Curso> cursoOpt = cursoRepository.findById(id);
+    if (cursoOpt.isEmpty()) {
+        throw new RuntimeException("Curso não encontrado com id: " + id);
+    }
+    return mapper.map(cursoOpt.get(), CursoDTO.class);
+}
+
 
     public void delete(Integer id) {
         Optional<Curso> cursoOpt = cursoRepository.findById(id);
