@@ -33,6 +33,25 @@ em uma estrutura **MVC**, além de aplicar o padrão **DTO** para transferência
 ## Documentação e teste
   - Swagger
   ![SWAGGER](image.png)
+
+
+## Front-end 100% funcional
+ - cursos/list
+
+![alt text](image-1.png)
+
+- cursos/create
+
+![alt text](image-3.png)
+
+  
+- cursos/editar/id
+
+![alt text](image-4.png)
+
+
+
+
   
 
 ---
